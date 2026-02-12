@@ -28,10 +28,7 @@ resource "aws_route53_record" "frontend_ipv6" {
   }
 }
 
-# ===================================================
-# Registros DNS para API/ALB
-# ===================================================
-
+# API DNS
 resource "aws_route53_record" "api" {
   zone_id = data.aws_route53_zone.main.zone_id
   name    = local.api_domain
