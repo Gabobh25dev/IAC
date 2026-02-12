@@ -51,7 +51,6 @@ resource "aws_iam_policy" "lambda_sqs_policy" {
   })
 }
 
-# Política para logs de CloudWatch
 resource "aws_iam_policy" "lambda_logs_policy" {
   name        = "${local.resource_prefix}-lambda-logs-policy"
   description = "Permite a Lambda escribir logs en CloudWatch"
