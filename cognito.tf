@@ -45,7 +45,6 @@ resource "aws_cognito_user_pool_client" "client" {
 
   generate_secret = false
 
-  # Expiración de tokens (30 minutos según requisitos)
   access_token_validity = 30
   id_token_validity     = 30
   token_validity_units {
