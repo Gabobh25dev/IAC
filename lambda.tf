@@ -71,7 +71,6 @@ resource "aws_iam_policy" "lambda_logs_policy" {
   })
 }
 
-# Adjuntar políticas
 resource "aws_iam_role_policy_attachment" "lambda_sqs" {
   role       = aws_iam_role.lambda_role.name
   policy_arn = aws_iam_policy.lambda_sqs_policy.arn
