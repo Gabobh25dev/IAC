@@ -22,7 +22,6 @@ resource "aws_iam_role" "lambda_role" {
   )
 }
 
-# Política para acceso a SQS
 resource "aws_iam_policy" "lambda_sqs_policy" {
   name        = "${local.resource_prefix}-lambda-sqs-policy"
   description = "Permite a Lambda consumir mensajes de SQS"
