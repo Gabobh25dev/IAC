@@ -1,22 +1,3 @@
-resource "random_password" "db_master_pass" {
-  length           = 16
-  special          = true
-  override_special = "_%!"
-}
-
-resource "aws_secretsmanager_secret" "aurora_db_secret" {
-  name        = "iac-aurora-db-credentials"
-  description = "Credenciales maestras para Aurora DB"
-}
-
-resource "aws_secretsmanager_secret_version" "aurora_db_secret_val" {
-  secret_id = aws_secretsmanager_secret.aurora_db_secret.id
-  secret_string = jsonencode({
-    username = "admin"
-    password = random_password.db_master_pass.result
-  })
-}
-
 resource "aws_db_subnet_group" "aurora_subnet_group" {
   name       = "iac-aurora-subnet-group"
   subnet_ids = [aws_subnet.private_data_1.id, aws_subnet.private_data_2.id]
@@ -33,7 +14,7 @@ resource "aws_rds_cluster" "main" {
   availability_zones      = ["us-east-1a", "us-east-1b"]
   database_name           = "iacdb"
   master_username         = "admin"
-  master_password         = random_password.db_master_pass.result
+  manage_master_user_password = true
   backup_retention_period = 7
   preferred_backup_window = "07:00-09:00"
   vpc_security_group_ids  = [aws_security_group.db_sg.id]

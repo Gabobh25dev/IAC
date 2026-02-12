@@ -40,7 +40,7 @@ resource "aws_iam_policy" "secrets_policy" {
           "secretsmanager:GetSecretValue"
         ]
         Resource = [
-          aws_secretsmanager_secret.aurora_db_secret.arn
+          aws_rds_cluster.main.master_user_secret[0].secret_arn
         ]
       }
     ]

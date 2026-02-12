@@ -17,7 +17,7 @@ resource "aws_elasticache_replication_group" "redis" {
   multi_az_enabled           = true
   num_cache_clusters         = 2
   subnet_group_name          = aws_elasticache_subnet_group.redis_subnet_group.name
-  security_group_ids         = [aws_security_group.db_sg.id]
+  security_group_ids         = [aws_security_group.redis_sg.id]
 
   at_rest_encryption_enabled = true
   transit_encryption_enabled = true
