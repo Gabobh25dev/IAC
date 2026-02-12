@@ -124,7 +124,6 @@ resource "aws_lambda_function" "message_processor" {
   )
 }
 
-# Archivo ZIP con el código de Lambda
 data "archive_file" "lambda_zip" {
   type        = "zip"
   source_dir  = "${path.module}/lambda"
