@@ -16,7 +16,6 @@ resource "aws_cognito_user_pool" "main" {
     enabled = true
   }
 
-  # Atributos estándar requeridos
   schema {
     attribute_data_type = "String"
     name                = "email"
