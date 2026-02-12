@@ -146,7 +146,6 @@ resource "aws_lambda_permission" "allow_sqs" {
   source_arn    = aws_sqs_queue.message_queue.arn
 }
 
-# IAM Policy para permitir a EC2 invocar Lambda
 resource "aws_iam_policy" "ec2_lambda_policy" {
   name        = "${local.resource_prefix}-ec2-lambda-invoke-policy"
   description = "Permite a instancias EC2 invocar Lambda"
