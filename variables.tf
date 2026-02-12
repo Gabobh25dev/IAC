@@ -31,7 +31,7 @@ variable "api_domain" {
 variable "sqs_message_retention_seconds" {
   description = "Retención de mensajes en SQS (segundos)"
   type        = number
-  default     = 345600 # 4 días
+  default     = 345600
 }
 
 variable "lambda_timeout" {
