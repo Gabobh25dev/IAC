@@ -130,7 +130,6 @@ data "archive_file" "lambda_zip" {
   output_path = "${path.module}/lambda.zip"
 }
 
-# Event Source Mapping: SQS -> Lambda
 resource "aws_lambda_event_source_mapping" "sqs_lambda" {
   event_source_arn                   = aws_sqs_queue.message_queue.arn
   function_name                      = aws_lambda_function.message_processor.arn
