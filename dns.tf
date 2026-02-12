@@ -16,7 +16,6 @@ resource "aws_route53_record" "frontend" {
   }
 }
 
-# Registr IPv6 para Frontend (CloudFront)
 resource "aws_route53_record" "frontend_ipv6" {
   zone_id = data.aws_route53_zone.main.zone_id
   name    = local.frontend_domain
