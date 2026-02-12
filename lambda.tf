@@ -1,4 +1,3 @@
-# Rol IAM para Lambda
 resource "aws_iam_role" "lambda_role" {
   name = "${local.resource_prefix}-lambda-role"
 
