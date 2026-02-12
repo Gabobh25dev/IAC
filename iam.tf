@@ -1,4 +1,3 @@
-# Rol para las instancias EC2
 resource "aws_iam_role" "ec2_role" {
   name = "iac-ec2-app-role"
 
