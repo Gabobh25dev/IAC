@@ -43,7 +43,7 @@ resource "aws_cognito_user_pool_client" "client" {
   name         = "iac-app-client"
   user_pool_id = aws_cognito_user_pool.main.id
 
-  generate_secret = false # Para SPAs/Web Apps usualmente es false
+  generate_secret = false
 
   # Expiración de tokens (30 minutos según requisitos)
   access_token_validity = 30
