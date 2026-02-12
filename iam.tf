@@ -19,7 +19,6 @@ resource "aws_iam_role" "ec2_role" {
   }
 }
 
-# Perfil de instancia para adjuntar el rol al Launch Template
 resource "aws_iam_instance_profile" "ec2_profile" {
   name = "iac-ec2-instance-profile"
   role = aws_iam_role.ec2_role.name
