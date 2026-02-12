@@ -30,8 +30,6 @@ resource "aws_cognito_user_pool" "main" {
     }
   }
 
-  # Configuración de seguridad administrativa (Lockout)
-  # Nota: Advanced Security Features tiene costo adicional
   user_pool_add_ons {
     advanced_security_mode = "AUDIT"
   }
