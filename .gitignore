@@ -7,3 +7,16 @@ crash.*.log
 *.tfvars.json
 .lambda.zip
 lambda.zip
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+terraform.tfvars
+*.tfvars
+.terraformrc
+terraform.rc
+
+# Secretos y claves
+*.pem
+*.key
+secrets/
+.env

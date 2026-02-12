@@ -40,7 +40,8 @@ resource "aws_iam_policy" "secrets_policy" {
           "secretsmanager:GetSecretValue"
         ]
         Resource = [
-          aws_rds_cluster.main.master_user_secret[0].secret_arn
+          aws_rds_cluster.main.master_user_secret[0].secret_arn,
+          aws_secretsmanager_secret.redis_auth_token.arn
         ]
       }
     ]
