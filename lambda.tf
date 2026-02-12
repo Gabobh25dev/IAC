@@ -138,7 +138,6 @@ resource "aws_lambda_event_source_mapping" "sqs_lambda" {
   function_response_types            = ["ReportBatchItemFailures"]
 }
 
-# IAM Policy para permitir a SQS invocar Lambda
 resource "aws_lambda_permission" "allow_sqs" {
   statement_id  = "AllowExecutionFromSQS"
   action        = "lambda:InvokeFunction"
