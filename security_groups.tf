@@ -86,3 +86,63 @@ resource "aws_security_group" "endpoints_sg" {
     Name = "IAC-Endpoints-SG"
   }
 }
+
+# Security Group para Lambda
+resource "aws_security_group" "lambda_sg" {
+  name        = "IAC-Lambda-SG"
+  description = "Security Group for Lambda Functions"
+  vpc_id      = aws_vpc.main.id
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "IAC-Lambda-SG"
+  }
+}
+
+# Regla ingress para permitir tráfico entre Lambda e instancias si es necesario
+resource "aws_security_group_rule" "lambda_to_app" {
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.lambda_sg.id
+  security_group_id        = aws_security_group.app_sg.id
+}
+
+# Security Group para Redis (ElastiCache) - mejora de seguridad
+resource "aws_security_group" "redis_sg" {
+  name        = "IAC-Redis-SG"
+  description = "Security Group for Redis/ElastiCache"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    from_port       = 6379
+    to_port         = 6379
+    protocol        = "tcp"
+    security_groups = [aws_security_group.app_sg.id]
+  }
+
+  ingress {
+    from_port       = 6379
+    to_port         = 6379
+    protocol        = "tcp"
+    security_groups = [aws_security_group.lambda_sg.id]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "IAC-Redis-SG"
+  }
+}

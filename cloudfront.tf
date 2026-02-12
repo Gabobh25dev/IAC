@@ -16,6 +16,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   enabled             = true
   is_ipv6_enabled     = true
   default_root_object = "index.html"
+  web_acl_id          = aws_wafv2_web_acl.cloudfront_waf.arn
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
@@ -48,6 +49,8 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   tags = {
     Name = "IAC-CloudFront-Distribution"
   }
+  
+  depends_on = [aws_wafv2_web_acl.cloudfront_waf]
 }
 
 resource "aws_s3_bucket_policy" "allow_cloudfront" {
