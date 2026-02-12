@@ -22,7 +22,7 @@ resource "aws_lb_target_group" "app_tg" {
 
   health_check {
     enabled             = true
-    path                = "/health" # Endpoint de salud esperado en tu app
+    path                = "/health"
     interval            = 30
     timeout             = 5
     healthy_threshold   = 2
