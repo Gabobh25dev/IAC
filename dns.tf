@@ -1,8 +1,4 @@
-# ===================================================
 # Route53 DNS Configuration
-# ===================================================
-
-# Data source: Buscar hosted zone existente por nombre
 data "aws_route53_zone" "main" {
   name = var.hosted_zone_name
 }
