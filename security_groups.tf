@@ -87,7 +87,6 @@ resource "aws_security_group" "endpoints_sg" {
   }
 }
 
-# Security Group para Lambda
 resource "aws_security_group" "lambda_sg" {
   name        = "IAC-Lambda-SG"
   description = "Security Group for Lambda Functions"
