@@ -33,8 +33,8 @@ resource "aws_wafv2_web_acl" "cloudfront_waf" {
     name     = "${local.resource_prefix}-common-rule-set"
     priority = 1
 
-    action {
-      block {}
+    override_action {
+      none {}
     }
 
     statement {
@@ -65,8 +65,8 @@ resource "aws_wafv2_web_acl" "cloudfront_waf" {
     name     = "${local.resource_prefix}-known-bad-inputs"
     priority = 2
 
-    action {
-      block {}
+    override_action {
+      none {}
     }
 
     statement {
@@ -88,8 +88,8 @@ resource "aws_wafv2_web_acl" "cloudfront_waf" {
     name     = "${local.resource_prefix}-sqli-protection"
     priority = 3
 
-    action {
-      block {}
+    override_action {
+      none {}
     }
 
     statement {
@@ -162,12 +162,8 @@ resource "aws_wafv2_web_acl" "alb_waf" {
     name     = "${local.resource_prefix}-alb-common-rule-set"
     priority = 1
 
-    action {
-      block {
-        custom_response {
-          response_code = 403
-        }
-      }
+    override_action {
+      none {}
     }
 
     statement {
@@ -189,8 +185,8 @@ resource "aws_wafv2_web_acl" "alb_waf" {
     name     = "${local.resource_prefix}-alb-sqli-protection"
     priority = 2
 
-    action {
-      block {}
+    override_action {
+      none {}
     }
 
     statement {

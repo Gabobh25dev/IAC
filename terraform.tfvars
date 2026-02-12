@@ -1,1 +1,2 @@
-redis_auth_token = "5IyoQgJuawzp4sFVn2fM8UHkDdSGXtxK"
+# Configuración de variables
+# Los secretos sensibles ahora se gestionan automáticamente en AWS Secrets Manager

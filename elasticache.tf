@@ -7,6 +7,11 @@ resource "aws_elasticache_subnet_group" "redis_subnet_group" {
   }
 }
 
+# Data source: Leer token de Redis desde Secrets Manager
+data "aws_secretsmanager_secret_version" "redis_auth_token" {
+  secret_id = aws_secretsmanager_secret.redis_auth_token.id
+}
+
 resource "aws_elasticache_replication_group" "redis" {
   replication_group_id       = "iac-redis-cluster"
   description                = "Redis cluster for session management and caching"
@@ -21,7 +26,7 @@ resource "aws_elasticache_replication_group" "redis" {
 
   at_rest_encryption_enabled = true
   transit_encryption_enabled = true
-  auth_token                 = var.redis_auth_token
+  auth_token                 = jsondecode(data.aws_secretsmanager_secret_version.redis_auth_token.secret_string)["token"]
 
   tags = {
     Name = "IAC-Redis-Cluster"
