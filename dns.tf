@@ -3,10 +3,7 @@ data "aws_route53_zone" "main" {
   name = var.hosted_zone_name
 }
 
-# ===================================================
-# Registros DNS para Frontend (CloudFront)
-# ===================================================
-
+# Frontend DNS
 resource "aws_route53_record" "frontend" {
   zone_id = data.aws_route53_zone.main.zone_id
   name    = local.frontend_domain
