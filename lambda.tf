@@ -81,7 +81,6 @@ resource "aws_iam_role_policy_attachment" "lambda_logs" {
   policy_arn = aws_iam_policy.lambda_logs_policy.arn
 }
 
-# CloudWatch Log Group para Lambda (con retención de 7 días)
 resource "aws_cloudwatch_log_group" "lambda_logs" {
   name              = "/aws/lambda/${local.resource_prefix}-message-processor"
   retention_in_days = 7
