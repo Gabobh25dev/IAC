@@ -8,7 +8,7 @@ resource "aws_wafv2_ip_set" "allowed_ips" {
   description        = "Allowed IPs for CloudFront - ${local.workspace}"
   scope              = "CLOUDFRONT"
   ip_address_version = "IPV4"
-  address_set        = [] # Puedes añadir IPs aquí si necesitas restringir acceso
+  addresses          = [] # Puedes añadir IPs aquí si necesitas restringir acceso
 
   tags = merge(
     local.common_tags,
@@ -141,14 +141,6 @@ resource "aws_wafv2_web_acl" "cloudfront_waf" {
       Name = "${local.resource_prefix}-cloudfront-waf"
     }
   )
-}
-
-# Asociar WAF a CloudFront Distribution
-resource "aws_cloudfront_distribution_update" "s3_distribution_waf" {
-  # Este es un ejemplo comentado - en producción, necesitarías actualizar directamente
-  # la distribución de CloudFront con el web_acl_id
-  # Por ahora, asumimos que cloudfront.tf será actualizado manualmente o con este parámetro:
-  # web_acl_id = aws_wafv2_web_acl.cloudfront_waf.arn
 }
 
 # ===================================================

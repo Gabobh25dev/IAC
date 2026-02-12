@@ -142,12 +142,8 @@ resource "aws_lambda_event_source_mapping" "sqs_lambda" {
   event_source_arn                   = aws_sqs_queue.message_queue.arn
   function_name                      = aws_lambda_function.message_processor.arn
   batch_size                         = 10
-  batch_window                       = 5
   maximum_batching_window_in_seconds = 5
   function_response_types            = ["ReportBatchItemFailures"]
-
-  # Redrive Policy para enviar a DLQ en caso de fallo
-  function_response_types = ["ReportBatchItemFailures"]
 }
 
 # IAM Policy para permitir a SQS invocar Lambda
