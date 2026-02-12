@@ -7,7 +7,6 @@ resource "aws_elasticache_subnet_group" "redis_subnet_group" {
   }
 }
 
-# Data source: Leer token de Redis desde Secrets Manager
 data "aws_secretsmanager_secret_version" "redis_auth_token" {
   secret_id = aws_secretsmanager_secret.redis_auth_token.id
 }
