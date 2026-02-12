@@ -45,7 +45,6 @@ resource "aws_iam_policy" "secrets_policy" {
   })
 }
 
-# Adjuntar política de Secrets Manager
 resource "aws_iam_role_policy_attachment" "attach_secrets" {
   role       = aws_iam_role.ec2_role.name
   policy_arn = aws_iam_policy.secrets_policy.arn
