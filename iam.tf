@@ -24,7 +24,6 @@ resource "aws_iam_instance_profile" "ec2_profile" {
   role = aws_iam_role.ec2_role.name
 }
 
-# Política para permitir acceso a Secrets Manager (Leer DB y Redis creds)
 resource "aws_iam_policy" "secrets_policy" {
   name        = "iac-secrets-policy"
   description = "Permite leer secretos de la app"
