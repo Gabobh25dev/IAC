@@ -1,4 +1,4 @@
-resource "aws_db_subnet_group" "aurora_subnet_group" {
+﻿resource "aws_db_subnet_group" "aurora_subnet_group" {
   name       = "iac-aurora-subnet-group"
   subnet_ids = [aws_subnet.private_data_1.id, aws_subnet.private_data_2.id]
 

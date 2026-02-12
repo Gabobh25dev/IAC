@@ -1,4 +1,4 @@
-resource "aws_elasticache_subnet_group" "redis_subnet_group" {
+﻿resource "aws_elasticache_subnet_group" "redis_subnet_group" {
   name       = "iac-redis-subnet-group"
   subnet_ids = [aws_subnet.private_data_1.id, aws_subnet.private_data_2.id]
 
@@ -7,10 +7,10 @@ resource "aws_elasticache_subnet_group" "redis_subnet_group" {
   }
 }
 
-# Data source: Leer token de Redis desde Secrets Manager
 data "aws_secretsmanager_secret_version" "redis_auth_token" {
   secret_id = aws_secretsmanager_secret.redis_auth_token.id
 }
+
 
 resource "aws_elasticache_replication_group" "redis" {
   replication_group_id       = "iac-redis-cluster"

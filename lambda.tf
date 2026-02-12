@@ -1,4 +1,4 @@
-# Rol IAM para Lambda
+﻿
 resource "aws_iam_role" "lambda_role" {
   name = "${local.resource_prefix}-lambda-role"
 
@@ -23,7 +23,7 @@ resource "aws_iam_role" "lambda_role" {
   )
 }
 
-# Política para acceso a SQS
+
 resource "aws_iam_policy" "lambda_sqs_policy" {
   name        = "${local.resource_prefix}-lambda-sqs-policy"
   description = "Permite a Lambda consumir mensajes de SQS"
@@ -53,7 +53,6 @@ resource "aws_iam_policy" "lambda_sqs_policy" {
   })
 }
 
-# Política para logs de CloudWatch
 resource "aws_iam_policy" "lambda_logs_policy" {
   name        = "${local.resource_prefix}-lambda-logs-policy"
   description = "Permite a Lambda escribir logs en CloudWatch"
@@ -74,7 +73,6 @@ resource "aws_iam_policy" "lambda_logs_policy" {
   })
 }
 
-# Adjuntar políticas
 resource "aws_iam_role_policy_attachment" "lambda_sqs" {
   role       = aws_iam_role.lambda_role.name
   policy_arn = aws_iam_policy.lambda_sqs_policy.arn
@@ -85,7 +83,6 @@ resource "aws_iam_role_policy_attachment" "lambda_logs" {
   policy_arn = aws_iam_policy.lambda_logs_policy.arn
 }
 
-# CloudWatch Log Group para Lambda (con retención de 7 días)
 resource "aws_cloudwatch_log_group" "lambda_logs" {
   name              = "/aws/lambda/${local.resource_prefix}-message-processor"
   retention_in_days = 7
@@ -98,7 +95,6 @@ resource "aws_cloudwatch_log_group" "lambda_logs" {
   )
 }
 
-# Función Lambda (ejemplo simple - procesa mensajes de SQS)
 resource "aws_lambda_function" "message_processor" {
   filename         = data.archive_file.lambda_zip.output_path
   function_name    = "${local.resource_prefix}-message-processor"
@@ -130,14 +126,12 @@ resource "aws_lambda_function" "message_processor" {
   )
 }
 
-# Archivo ZIP con el código de Lambda
 data "archive_file" "lambda_zip" {
   type        = "zip"
   source_dir  = "${path.module}/lambda"
   output_path = "${path.module}/lambda.zip"
 }
 
-# Event Source Mapping: SQS -> Lambda
 resource "aws_lambda_event_source_mapping" "sqs_lambda" {
   event_source_arn                   = aws_sqs_queue.message_queue.arn
   function_name                      = aws_lambda_function.message_processor.arn
@@ -146,7 +140,6 @@ resource "aws_lambda_event_source_mapping" "sqs_lambda" {
   function_response_types            = ["ReportBatchItemFailures"]
 }
 
-# IAM Policy para permitir a SQS invocar Lambda
 resource "aws_lambda_permission" "allow_sqs" {
   statement_id  = "AllowExecutionFromSQS"
   action        = "lambda:InvokeFunction"
@@ -155,7 +148,6 @@ resource "aws_lambda_permission" "allow_sqs" {
   source_arn    = aws_sqs_queue.message_queue.arn
 }
 
-# IAM Policy para permitir a EC2 invocar Lambda
 resource "aws_iam_policy" "ec2_lambda_policy" {
   name        = "${local.resource_prefix}-ec2-lambda-invoke-policy"
   description = "Permite a instancias EC2 invocar Lambda"
@@ -181,7 +173,6 @@ resource "aws_iam_policy" "ec2_lambda_policy" {
   })
 }
 
-# Adjuntar policy de Lambda a rol de EC2
 resource "aws_iam_role_policy_attachment" "ec2_lambda_invoke" {
   role       = aws_iam_role.ec2_role.name
   policy_arn = aws_iam_policy.ec2_lambda_policy.arn

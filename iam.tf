@@ -1,4 +1,4 @@
-# Rol para las instancias EC2
+﻿
 resource "aws_iam_role" "ec2_role" {
   name = "iac-ec2-app-role"
 
@@ -20,13 +20,11 @@ resource "aws_iam_role" "ec2_role" {
   }
 }
 
-# Perfil de instancia para adjuntar el rol al Launch Template
 resource "aws_iam_instance_profile" "ec2_profile" {
   name = "iac-ec2-instance-profile"
   role = aws_iam_role.ec2_role.name
 }
 
-# Política para permitir acceso a Secrets Manager (Leer DB y Redis creds)
 resource "aws_iam_policy" "secrets_policy" {
   name        = "iac-secrets-policy"
   description = "Permite leer secretos de la app"
@@ -48,13 +46,11 @@ resource "aws_iam_policy" "secrets_policy" {
   })
 }
 
-# Adjuntar política de Secrets Manager
 resource "aws_iam_role_policy_attachment" "attach_secrets" {
   role       = aws_iam_role.ec2_role.name
   policy_arn = aws_iam_policy.secrets_policy.arn
 }
 
-# Adjuntar política gestionada para SSM (Permite conectar via Session Manager al EC2 sin SSH/puerto 22)
 resource "aws_iam_role_policy_attachment" "attach_ssm" {
   role       = aws_iam_role.ec2_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"

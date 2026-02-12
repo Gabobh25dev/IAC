@@ -1,11 +1,11 @@
-variable "project_name" {
+﻿variable "project_name" {
   description = "Nombre del proyecto"
   type        = string
   default     = "iac"
 }
 
 variable "region" {
-  description = "Región AWS"
+  description = "RegiÃ³n AWS"
   type        = string
   default     = "us-east-1"
 }
@@ -29,9 +29,9 @@ variable "api_domain" {
 }
 
 variable "sqs_message_retention_seconds" {
-  description = "Retención de mensajes en SQS (segundos)"
+  description = "RetenciÃ³n de mensajes en SQS (segundos)"
   type        = number
-  default     = 345600 # 4 días
+  default     = 345600 # 4 dÃ­as
 }
 
 variable "lambda_timeout" {

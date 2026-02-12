@@ -1,4 +1,4 @@
-resource "aws_cloudfront_origin_access_control" "frontend_oac" {
+﻿resource "aws_cloudfront_origin_access_control" "frontend_oac" {
   name                              = "iac-frontend-oac"
   description                       = "OAC para frontend S3"
   origin_access_control_origin_type = "s3"

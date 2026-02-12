@@ -1,3 +1,4 @@
+﻿
 resource "aws_cognito_user_pool" "main" {
   name = "iac-user-pool"
 
@@ -16,7 +17,7 @@ resource "aws_cognito_user_pool" "main" {
     enabled = true
   }
 
-  # Atributos estándar requeridos
+
   schema {
     attribute_data_type = "String"
     name                = "email"
@@ -24,7 +25,7 @@ resource "aws_cognito_user_pool" "main" {
     mutable             = false
   }
 
-  # Configuración de recuperación de cuenta
+
   account_recovery_setting {
     recovery_mechanism {
       name     = "verified_email"
@@ -32,8 +33,8 @@ resource "aws_cognito_user_pool" "main" {
     }
   }
 
-  # Configuración de seguridad administrativa (Lockout)
-  # Nota: Advanced Security Features tiene costo adicional
+
+
   user_pool_add_ons {
     advanced_security_mode = "AUDIT"
   }
@@ -49,7 +50,7 @@ resource "aws_cognito_user_pool_client" "client" {
 
   generate_secret = false # Para SPAs/Web Apps usualmente es false
 
-  # Expiración de tokens (30 minutos según requisitos)
+
   access_token_validity = 30
   id_token_validity     = 30
   token_validity_units {

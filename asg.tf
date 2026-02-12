@@ -1,4 +1,4 @@
-resource "aws_autoscaling_group" "app_asg" {
+﻿resource "aws_autoscaling_group" "app_asg" {
   name                      = "iac-app-asg"
   vpc_zone_identifier       = [aws_subnet.private_app_1.id, aws_subnet.private_app_2.id]
   target_group_arns         = [aws_lb_target_group.app_tg.arn]

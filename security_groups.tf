@@ -1,3 +1,4 @@
+﻿
 resource "aws_security_group" "alb_sg" {
   name        = "IAC-ALB-SG"
   description = "Security Group for Application Load Balancer"
@@ -29,6 +30,7 @@ resource "aws_security_group" "alb_sg" {
   }
 }
 
+
 resource "aws_security_group" "app_sg" {
   name        = "IAC-App-SG"
   description = "Security Group for App Instances"
@@ -52,6 +54,7 @@ resource "aws_security_group" "app_sg" {
     Name = "IAC-App-SG"
   }
 }
+
 
 resource "aws_security_group" "db_sg" {
   name        = "IAC-DB-SG"
@@ -87,7 +90,7 @@ resource "aws_security_group" "endpoints_sg" {
   }
 }
 
-# Security Group para Lambda
+
 resource "aws_security_group" "lambda_sg" {
   name        = "IAC-Lambda-SG"
   description = "Security Group for Lambda Functions"
@@ -105,7 +108,7 @@ resource "aws_security_group" "lambda_sg" {
   }
 }
 
-# Regla ingress para permitir tráfico entre Lambda e instancias si es necesario
+
 resource "aws_security_group_rule" "lambda_to_app" {
   type                     = "ingress"
   from_port                = 80
@@ -115,7 +118,7 @@ resource "aws_security_group_rule" "lambda_to_app" {
   security_group_id        = aws_security_group.app_sg.id
 }
 
-# Security Group para Redis (ElastiCache) - mejora de seguridad
+
 resource "aws_security_group" "redis_sg" {
   name        = "IAC-Redis-SG"
   description = "Security Group for Redis/ElastiCache"

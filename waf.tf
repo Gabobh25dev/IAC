@@ -1,14 +1,9 @@
-# ===================================================
-# WAF para CloudFront (IP-set y reglas)
-# ===================================================
-
-# IP Set para permitir acceso desde IPs específicas (opcional)
-resource "aws_wafv2_ip_set" "allowed_ips" {
+﻿resource "aws_wafv2_ip_set" "allowed_ips" {
   name               = "${local.resource_prefix}-allowed-ips"
   description        = "Allowed IPs for CloudFront - ${local.workspace}"
   scope              = "CLOUDFRONT"
   ip_address_version = "IPV4"
-  addresses          = [] # Puedes añadir IPs aquí si necesitas restringir acceso
+  addresses          = []
 
   tags = merge(
     local.common_tags,
@@ -18,7 +13,6 @@ resource "aws_wafv2_ip_set" "allowed_ips" {
   )
 }
 
-# Web ACL para CloudFront
 resource "aws_wafv2_web_acl" "cloudfront_waf" {
   name        = "${local.resource_prefix}-cloudfront-waf"
   description = "WAF para CloudFront - ${local.workspace}"
@@ -28,7 +22,6 @@ resource "aws_wafv2_web_acl" "cloudfront_waf" {
     allow {}
   }
 
-  # Regla 1: Common Rule Set (SQL Injection, XSS, etc.)
   rule {
     name     = "${local.resource_prefix}-common-rule-set"
     priority = 1
@@ -42,7 +35,6 @@ resource "aws_wafv2_web_acl" "cloudfront_waf" {
         name        = "AWSManagedRulesCommonRuleSet"
         vendor_name = "AWS"
 
-        # Excluir algunas reglas si es necesario
         rule_action_override {
           name = "SizeRestrictions_BODY"
 
@@ -60,7 +52,6 @@ resource "aws_wafv2_web_acl" "cloudfront_waf" {
     }
   }
 
-  # Regla 2: Known Bad Inputs
   rule {
     name     = "${local.resource_prefix}-known-bad-inputs"
     priority = 2
@@ -83,7 +74,6 @@ resource "aws_wafv2_web_acl" "cloudfront_waf" {
     }
   }
 
-  # Regla 3: SQL Injection Protection
   rule {
     name     = "${local.resource_prefix}-sqli-protection"
     priority = 3
@@ -106,7 +96,6 @@ resource "aws_wafv2_web_acl" "cloudfront_waf" {
     }
   }
 
-  # Regla 4: Rate Limiting (máximo 2000 requests en 5 minutos)
   rule {
     name     = "${local.resource_prefix}-rate-limit"
     priority = 4
@@ -143,11 +132,6 @@ resource "aws_wafv2_web_acl" "cloudfront_waf" {
   )
 }
 
-# ===================================================
-# WAF para ALB (Regional)
-# ===================================================
-
-# Web ACL para ALB
 resource "aws_wafv2_web_acl" "alb_waf" {
   name        = "${local.resource_prefix}-alb-waf"
   description = "WAF para ALB - ${local.workspace}"
@@ -157,7 +141,6 @@ resource "aws_wafv2_web_acl" "alb_waf" {
     allow {}
   }
 
-  # Regla 1: Common Rule Set
   rule {
     name     = "${local.resource_prefix}-alb-common-rule-set"
     priority = 1
@@ -180,7 +163,6 @@ resource "aws_wafv2_web_acl" "alb_waf" {
     }
   }
 
-  # Regla 2: SQL Injection Protection
   rule {
     name     = "${local.resource_prefix}-alb-sqli-protection"
     priority = 2
@@ -203,7 +185,6 @@ resource "aws_wafv2_web_acl" "alb_waf" {
     }
   }
 
-  # Regla 3: Rate Limiting para ALB
   rule {
     name     = "${local.resource_prefix}-alb-rate-limit"
     priority = 3
@@ -240,13 +221,13 @@ resource "aws_wafv2_web_acl" "alb_waf" {
   )
 }
 
-# Asociar WAF a ALB
+
 resource "aws_wafv2_web_acl_association" "alb" {
   resource_arn = aws_lb.main.arn
   web_acl_arn  = aws_wafv2_web_acl.alb_waf.arn
 }
 
-# CloudWatch Log Group para WAF (ALB)
+
 resource "aws_cloudwatch_log_group" "waf_alb_logs" {
   name              = "/aws/waf/${local.resource_prefix}-alb"
   retention_in_days = 7
@@ -259,7 +240,7 @@ resource "aws_cloudwatch_log_group" "waf_alb_logs" {
   )
 }
 
-# Configurar logging de WAF para ALB
+
 resource "aws_wafv2_web_acl_logging_configuration" "alb_logging" {
   resource_arn            = aws_wafv2_web_acl.alb_waf.arn
   log_destination_configs = [aws_cloudwatch_log_group.waf_alb_logs.arn]
@@ -285,7 +266,7 @@ resource "aws_wafv2_web_acl_logging_configuration" "alb_logging" {
   ]
 }
 
-# CloudWatch Log Group para WAF (CloudFront)
+
 resource "aws_cloudwatch_log_group" "waf_cloudfront_logs" {
   name              = "/aws/waf/${local.resource_prefix}-cloudfront"
   retention_in_days = 7
@@ -298,7 +279,7 @@ resource "aws_cloudwatch_log_group" "waf_cloudfront_logs" {
   )
 }
 
-# Configurar logging de WAF para CloudFront
+
 resource "aws_wafv2_web_acl_logging_configuration" "cloudfront_logging" {
   resource_arn            = aws_wafv2_web_acl.cloudfront_waf.arn
   log_destination_configs = [aws_cloudwatch_log_group.waf_cloudfront_logs.arn]

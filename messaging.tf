@@ -1,4 +1,4 @@
-# SNS Topic para publicar mensajes
+﻿
 resource "aws_sns_topic" "app_events" {
   name              = "${local.resource_prefix}-app-events"
   display_name      = "App Events Topic - ${local.workspace}"
@@ -12,7 +12,7 @@ resource "aws_sns_topic" "app_events" {
   )
 }
 
-# Política de SNS Topic para permitir publicar mensajes
+
 resource "aws_sns_topic_policy" "app_events" {
   arn = aws_sns_topic.app_events.arn
 
@@ -45,7 +45,6 @@ resource "aws_sns_topic_policy" "app_events" {
   })
 }
 
-# SQS Queue para procesar mensajes (por Lambda)
 resource "aws_sqs_queue" "message_queue" {
   name                      = "${local.resource_prefix}-message-queue"
   delay_seconds             = 0
@@ -54,7 +53,7 @@ resource "aws_sqs_queue" "message_queue" {
   receive_wait_time_seconds = 20 # Long polling
   visibility_timeout_seconds = var.lambda_timeout + 30
 
-  # Habilitamos SSE con KMS
+
   sqs_managed_sse_enabled = true
 
   tags = merge(
@@ -65,7 +64,7 @@ resource "aws_sqs_queue" "message_queue" {
   )
 }
 
-# Política de SQS para permitir SNS publicar
+
 resource "aws_sqs_queue_policy" "message_queue" {
   queue_url = aws_sqs_queue.message_queue.id
 
@@ -92,7 +91,6 @@ resource "aws_sqs_queue_policy" "message_queue" {
   })
 }
 
-# Suscripción de SNS a SQS
 resource "aws_sns_topic_subscription" "app_events_to_queue" {
   topic_arn            = aws_sns_topic.app_events.arn
   protocol             = "sqs"
@@ -100,7 +98,6 @@ resource "aws_sns_topic_subscription" "app_events_to_queue" {
   raw_message_delivery = true
 }
 
-# Dead Letter Queue (DLQ) para mensajes que fallan
 resource "aws_sqs_queue" "message_queue_dlq" {
   name                      = "${local.resource_prefix}-message-queue-dlq"
   delay_seconds             = 0
@@ -116,7 +113,7 @@ resource "aws_sqs_queue" "message_queue_dlq" {
   )
 }
 
-# Redrive policy para la queue principal (apunta al DLQ)
+
 resource "aws_sqs_queue_redrive_policy" "message_queue" {
   queue_url       = aws_sqs_queue.message_queue.id
   redrive_policy = jsonencode({

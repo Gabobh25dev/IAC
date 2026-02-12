@@ -1,7 +1,4 @@
-# ===================================================
-# Outputs para recursos principales
-# ===================================================
-
+﻿
 output "vpc_id" {
   description = "ID de la VPC"
   value       = aws_vpc.main.id
@@ -26,10 +23,6 @@ output "cloudfront_distribution_id" {
   description = "ID de CloudFront Distribution"
   value       = aws_cloudfront_distribution.s3_distribution.id
 }
-
-# ===================================================
-# Outputs para Messaging
-# ===================================================
 
 output "sns_topic_arn" {
   description = "ARN del SNS Topic para eventos"
@@ -56,17 +49,14 @@ output "sqs_dlq_url" {
   value       = aws_sqs_queue.message_queue_dlq.url
 }
 
-# ===================================================
-# Outputs para Lambda
-# ===================================================
 
 output "lambda_function_name" {
-  description = "Nombre de la función Lambda"
+  description = "Nombre de la funciÃ³n Lambda"
   value       = aws_lambda_function.message_processor.function_name
 }
 
 output "lambda_function_arn" {
-  description = "ARN de la función Lambda"
+  description = "ARN de la funciÃ³n Lambda"
   value       = aws_lambda_function.message_processor.arn
 }
 
@@ -80,9 +70,9 @@ output "lambda_log_group_name" {
   value       = aws_cloudwatch_log_group.lambda_logs.name
 }
 
-# ===================================================
-# Outputs para WAF
-# ===================================================
+
+
+
 
 output "cloudfront_waf_id" {
   description = "ID del WAF para CloudFront"
@@ -104,9 +94,9 @@ output "waf_alb_log_group" {
   value       = aws_cloudwatch_log_group.waf_alb_logs.name
 }
 
-# ===================================================
-# Outputs para Route53 / DNS
-# ===================================================
+
+
+
 
 output "hosted_zone_id" {
   description = "ID de la Hosted Zone"
@@ -133,9 +123,9 @@ output "route53_health_check_id" {
   value       = aws_route53_health_check.alb.id
 }
 
-# ===================================================
-# Outputs para Security Groups
-# ===================================================
+
+
+
 
 output "lambda_sg_id" {
   description = "ID del Security Group de Lambda"
@@ -146,10 +136,6 @@ output "redis_sg_id" {
   description = "ID del Security Group de Redis"
   value       = aws_security_group.redis_sg.id
 }
-
-# ===================================================
-# Outputs de información general
-# ===================================================
 
 output "environment" {
   description = "Ambiente (workspace actual)"

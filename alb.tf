@@ -1,4 +1,4 @@
-# Application Load Balancer (Público, recibe tráfico de CloudFront/Internet)
+﻿
 resource "aws_lb" "main" {
   name               = "iac-app-alb"
   internal           = false
@@ -13,7 +13,7 @@ resource "aws_lb" "main" {
   }
 }
 
-# Target Group (Donde se enviará el tráfico, puertos de la App)
+
 resource "aws_lb_target_group" "app_tg" {
   name        = "iac-app-target-group"
   port        = 80
@@ -35,7 +35,7 @@ resource "aws_lb_target_group" "app_tg" {
   }
 }
 
-# Listener HTTP (Redirecciona o forwardea tráfico)
+
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.main.arn
   port              = "80"
