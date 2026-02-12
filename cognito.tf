@@ -23,7 +23,6 @@ resource "aws_cognito_user_pool" "main" {
     mutable             = false
   }
 
-  # Configuración de recuperación de cuenta
   account_recovery_setting {
     recovery_mechanism {
       name     = "verified_email"
