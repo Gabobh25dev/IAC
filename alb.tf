@@ -12,7 +12,7 @@ resource "aws_lb" "main" {
   }
 }
 
-# Target Group (Donde se enviará el tráfico, puertos de la App)
+# Target Group
 resource "aws_lb_target_group" "app_tg" {
   name        = "iac-app-target-group"
   port        = 80
