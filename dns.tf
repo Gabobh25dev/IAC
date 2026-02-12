@@ -41,7 +41,6 @@ resource "aws_route53_record" "api" {
   }
 }
 
-# Registro IPv6 para API/ALB (si el ALB soporta IPv6)
 resource "aws_route53_record" "api_ipv6" {
   zone_id = data.aws_route53_zone.main.zone_id
   name    = local.api_domain
