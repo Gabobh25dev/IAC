@@ -50,7 +50,6 @@ resource "aws_iam_role_policy_attachment" "attach_secrets" {
   policy_arn = aws_iam_policy.secrets_policy.arn
 }
 
-# Adjuntar política gestionada para SSM (Permite conectar via Session Manager al EC2 sin SSH/puerto 22)
 resource "aws_iam_role_policy_attachment" "attach_ssm" {
   role       = aws_iam_role.ec2_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
