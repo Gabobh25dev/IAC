@@ -81,7 +81,7 @@ resource "aws_route53_health_check" "alb" {
 #   records = ["v=DMARC1; p=none;"]
 # }
 
-# Ejemplo: Registro MX (comentado)
+# Registro MX (comentado)
 # resource "aws_route53_record" "example_mx" {
 #   zone_id = data.aws_route53_zone.main.zone_id
 #   name    = var.hosted_zone_name
