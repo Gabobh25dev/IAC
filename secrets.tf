@@ -1,14 +1,14 @@
-
-AWS Secrets Manager - Gestión Segura de Secretos
-
+# ===================================================
+# AWS Secrets Manager - Gestion Segura de Secretos
+# ===================================================
 
 # Secreto para Redis Auth Token
 resource "aws_secretsmanager_secret" "redis_auth_token" {
-  name        = "${local.project_prefix}-redis-auth-token"
+  name        = "${local.resource_prefix}-redis-auth-token"
   description = "Token de autenticación para Redis/ElastiCache"
 
   tags = {
-    Name = "${local.project_prefix}-redis-auth-token"
+    Name = "${local.resource_prefix}-redis-auth-token"
   }
 }
 
