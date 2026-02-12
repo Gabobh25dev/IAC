@@ -1,4 +1,3 @@
-# Application Load Balancer (Público, recibe tráfico de CloudFront/Internet)
 resource "aws_lb" "main" {
   name               = "iac-app-alb"
   internal           = false
