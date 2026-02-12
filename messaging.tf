@@ -52,6 +52,7 @@ resource "aws_sqs_queue" "message_queue" {
   max_message_size          = 262144 # 256 KB
   message_retention_seconds = var.sqs_message_retention_seconds
   receive_wait_time_seconds = 20 # Long polling
+  visibility_timeout_seconds = var.lambda_timeout + 30
 
   # Habilitamos SSE con KMS
   sqs_managed_sse_enabled = true
