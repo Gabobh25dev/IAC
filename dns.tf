@@ -90,11 +90,7 @@ resource "aws_route53_health_check" "alb" {
 #   records = ["10 mail.${var.hosted_zone_name}"]
 # }
 
-# ===================================================
-# Traffic Policy (Opcional - para failover)
-# ===================================================
-
-# Ejemplo de failover DNS (comentado)
+# DNS Failover (comentado)
 # resource "aws_route53_record" "api_failover" {
 #   zone_id         = data.aws_route53_zone.main.zone_id
 #   name            = local.api_domain
