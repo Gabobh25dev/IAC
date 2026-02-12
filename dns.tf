@@ -71,11 +71,8 @@ resource "aws_route53_health_check" "alb" {
   )
 }
 
-# ===================================================
-# Registros DNS adicionales (ejemplo: mail, TXT, etc.)
-# ===================================================
-
-# Ejemplo: Registro TXT para validación DKIM (comentado)
+# Additional DNS Records
+# Registro TXT para validación DKIM (comentado)
 # resource "aws_route53_record" "example_txt" {
 #   zone_id = data.aws_route53_zone.main.zone_id
 #   name    = "_dmarc.${var.hosted_zone_name}"
