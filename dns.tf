@@ -53,11 +53,7 @@ resource "aws_route53_record" "api_ipv6" {
   }
 }
 
-# ===================================================
-# Health Checks para Route53 (Opcional pero recomendado)
-# ===================================================
-
-# Health Check para ALB
+# ALB Health Check
 resource "aws_route53_health_check" "alb" {
   fqdn              = aws_lb.main.dns_name
   port              = 80
