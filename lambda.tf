@@ -93,7 +93,6 @@ resource "aws_cloudwatch_log_group" "lambda_logs" {
   )
 }
 
-# Función Lambda (ejemplo simple - procesa mensajes de SQS)
 resource "aws_lambda_function" "message_processor" {
   filename         = data.archive_file.lambda_zip.output_path
   function_name    = "${local.resource_prefix}-message-processor"
